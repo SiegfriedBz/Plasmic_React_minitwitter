@@ -8,13 +8,13 @@ import { v4 } from 'uuid';
 function App() {
 
   const [posts, setPosts] = useState([
-    {id: 1, title: "Hello world 01", time: Math.floor(Math.random() * 24)},
-    {id: 2, title: "Hello world 02", time: Math.floor(Math.random() * 24)},
-    {id: 3, title: "Hello world 03", time: Math.floor(Math.random() * 24)},
+    {id: 1, title: "Hello world", createdAt: new Date()},
+    {id: 2, title: "Hello", createdAt: new Date()},
+    {id: 3, title: "World", createdAt: new Date()},
   ]);
 
   const onAddPost = (postContent) => {
-    setPosts([...posts, {title: postContent, time: Math.floor(Math.random() * 24), id: v4()}])
+    setPosts([...posts, { id: v4(), title: postContent, createdAt: new Date() }])
   }
 
   return (
