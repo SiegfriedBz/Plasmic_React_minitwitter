@@ -16,15 +16,43 @@ function App() {
 
   useEffect(() => {
     const init = async() => {
-      const response = await fetch(`${RAILS_API}/posts`)
-      const data = await response.json()
-      console.log(data)
-      setPosts(data)
+      let posts = await getPosts()
+      setPosts(posts)
     }; init()
   }, [])
 
-  const onAddPost = (postContent) => {
-    setPosts([...posts, createPost({ content: postContent, createdAt: new Date() })])
+  const getPosts = async() => {
+    const response = await fetch(`${RAILS_API}/posts`)
+    return await response.json()
+  }
+
+  const getPost = async(post_url) => {
+    const response = await fetch(post_url)
+    return await response.json()
+  }
+
+  const savePost = async(post) => {
+    try {
+      let resp = await fetch(`${RAILS_API}/posts`, {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify(post)
+      })
+      let newPostLocation = resp.headers.get("Location")
+      console.log(newPostLocation)
+      return newPostLocation
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const onAddPost = async(postContent) => {
+    let post = createPost({ content: postContent, createdAt: new Date() })
+    let newPostLocation = await savePost(post)
+    let newPost = await getPost(newPostLocation)
+    setPosts([...posts, newPost])
   }
 
   return (
