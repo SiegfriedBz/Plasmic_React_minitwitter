@@ -12,3 +12,5 @@ export function createPost(props: Omit<PostEntry, 'id'>): PostEntry {
     ...props
   };
 }
+
+
