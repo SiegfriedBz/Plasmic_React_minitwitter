@@ -1,8 +1,10 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Routes, Route } from "react-router-dom"
 import Feed from './components/Feed';
 import NewPost from "./components/NewPost"
 import { createPost } from "./model.ts"
+
+const RAILS_API = "http://localhost:3000/api/v1"
 
 function App() {
 
@@ -12,11 +14,18 @@ function App() {
     createPost({ content: "World", createdAt: new Date() }),
   ]);
 
+  useEffect(() => {
+    const init = async() => {
+      const response = await fetch(`${RAILS_API}/posts`)
+      const data = await response.json()
+      console.log(data)
+      setPosts(data)
+    }; init()
+  }, [])
+
   const onAddPost = (postContent) => {
     setPosts([...posts, createPost({ content: postContent, createdAt: new Date() })])
   }
-
-  console.log(posts)
 
   return (
     <div>
