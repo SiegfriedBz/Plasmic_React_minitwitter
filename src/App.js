@@ -14,7 +14,7 @@ function App() {
   ]);
 
   const onAddPost = (postContent) => {
-    setPosts([...posts, {title: postContent, time: Math.floor(Math.random() * 24), id: v4()}])
+    setPosts([...posts, { id: v4(), title: postContent, time: Math.floor(Math.random() * 24) }])
   }
 
   return (
