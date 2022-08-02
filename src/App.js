@@ -16,8 +16,6 @@ function App() {
     setPosts([...posts, createPost({ content: postContent, createdAt: new Date() })])
   }
 
-  console.log(posts)
-
   return (
     <div>
       <Routes>
